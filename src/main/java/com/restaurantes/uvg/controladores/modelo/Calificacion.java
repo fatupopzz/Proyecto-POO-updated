@@ -1,4 +1,4 @@
-package src.main.java.com.restaurantes.uvg.controladores.modelo;
+package com.restaurantes.uvg.controladores.modelo;
 
 import java.time.LocalDateTime;
 
