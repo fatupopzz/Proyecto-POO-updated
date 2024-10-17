@@ -1,61 +1,54 @@
 package com.restaurantes.uvg.servicio;
 
 import com.restaurantes.uvg.controladores.modelo.Restaurante;
+import com.restaurantes.uvg.repositorio.RestauranteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RestauranteService {
 
-    private List<Restaurante> restaurantes = new ArrayList<>();
+    @Autowired
+    private RestauranteRepository restauranteRepository;
 
     public Restaurante crearRestaurante(Restaurante restaurante) {
-        restaurante.setId((long) (restaurantes.size() + 1));
-        restaurantes.add(restaurante);
-        return restaurante;
+        return restauranteRepository.save(restaurante);
     }
 
     public Optional<Restaurante> obtenerRestaurante(Long id) {
-        return restaurantes.stream()
-                .filter(r -> r.getId().equals(id))
-                .findFirst();
+        return restauranteRepository.findById(id);
     }
 
     public List<Restaurante> listarRestaurantes() {
-        return restaurantes;
+        return restauranteRepository.findAll();
     }
 
-    public Optional<Restaurante> actualizarRestaurante(Long id, Restaurante restaurante) {
-        Optional<Restaurante> restauranteExistente = obtenerRestaurante(id);
-        if (restauranteExistente.isPresent()) {
-            Restaurante r = restauranteExistente.get();
-            r.setNombre(restaurante.getNombre());
-            r.setDireccion(restaurante.getDireccion());
-            r.setTipoComida(restaurante.getTipoComida());
-            return Optional.of(r);
-        }
-        return Optional.empty();
+    public Optional<Restaurante> actualizarRestaurante(Long id, Restaurante restauranteActualizado) {
+        return restauranteRepository.findById(id)
+            .map(restaurante -> {
+                restaurante.setNombre(restauranteActualizado.getNombre());
+                restaurante.setDireccion(restauranteActualizado.getDireccion());
+                restaurante.setTipoComida(restauranteActualizado.getTipoComida());
+                return restauranteRepository.save(restaurante);
+            });
     }
 
     public boolean eliminarRestaurante(Long id) {
-        return restaurantes.removeIf(r -> r.getId().equals(id));
+        if (restauranteRepository.existsById(id)) {
+            restauranteRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
-    // Método para buscar restaurantes por nombre
     public List<Restaurante> buscarRestaurantesPorNombre(String nombre) {
-        return restaurantes.stream()
-                .filter(r -> r.getNombre().toLowerCase().contains(nombre.toLowerCase()))
-                .toList();
+        return restauranteRepository.findByNombreContainingIgnoreCase(nombre);
     }
-    // Método para obtener los restaurantes mejor calificados
+
     public List<Restaurante> obtenerRestaurantesMejorCalificados() {
-        return restaurantes.stream()
-                .sorted((r1, r2) -> Double.compare(r2.getCalificacionPromedio(), r1.getCalificacionPromedio()))
-                .toList();
+        return restauranteRepository.findTop10ByOrderByCalificacionPromedioDesc();
     }
-
-
 }
