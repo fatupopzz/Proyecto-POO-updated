@@ -1,7 +1,8 @@
-package com.restaurantes.uvg.servicio;
+package com.restaurantes.servicio;
 
-import com.restaurantes.uvg.controladores.modelo.Restaurante;
-import com.restaurantes.uvg.repositorio.RestauranteRepository;
+import com.restaurantes.modelo.Restaurante;
+import com.restaurantes.Repositorio.RestauranteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
