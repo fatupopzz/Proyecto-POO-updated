@@ -8,7 +8,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #21be16; /* Verde claro del navbar */
+    background-color: #198911; /* Verde claro del navbar */
     padding: 15px;
     display: flex;
     justify-content: space-between;
@@ -50,11 +50,13 @@ body {
 .navbar .logo {
     display: flex;
     align-items: center;
+    margin-right: auto; /* Logo más a la izquierda */
 }
 
 .navbar .logo img {
-    height: 40px; /* Ajusta según el tamaño de tu logo */
+    height: 60px; /* Tamaño más grande para el logo */
     width: auto;
+    margin-left: 20px; /* Un poco de espacio a la izquierda del logo */
 }
 
 /* Grid de restaurantes */
@@ -101,6 +103,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 .restaurant-card button:hover {

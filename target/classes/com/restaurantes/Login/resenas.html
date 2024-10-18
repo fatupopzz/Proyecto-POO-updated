@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñar Restaurante</title>
+    <link rel="stylesheet" href="resena.css">
+    <script src="resena.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Reseñar Restaurante</h1>
+        <form id="review-form">
+            <!-- Campo oculto para el nombre del restaurante -->
+            <input type="hidden" id="restaurant-name" value="">
+            <div class="form-group">
+                <label for="rating">Puntuación:</label>
+                <input type="number" id="rating" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="review-text">Reseña:</label>
+                <textarea id="review-text" required></textarea>
+            </div>
+            <button href="restaurantes.html"  type="submit">Enviar Reseña</button>
+        </form>
+    </div>
+
+    <!-- <script>
+        // Captura el nombre del restaurante desde la URL y lo coloca en el campo oculto
+        const urlParams = new URLSearchParams(window.location.search);
+        const restaurantName = urlParams.get('restaurant');
+        if (restaurantName) {
+            document.getElementById('restaurant-name').value = restaurantName;
+        }
+    </script> -->
+</body>
+
+</html>
