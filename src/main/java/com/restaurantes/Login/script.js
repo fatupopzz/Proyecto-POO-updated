@@ -16,10 +16,13 @@ signInButton.addEventListener('click', () => {
     const password = document.getElementById('password').value;
 
     // Datos de login quemados
-    if (email === 'riv24856@uvg.edu.gt' && password === '24856') {
-        // Redirigir a la página de restaurantes
-        window.location.href = './restaurantes.html';
-    } else {
-        alert('Correo o contraseña incorrectos');
-    }
+if ((email === 'riv24856@uvg.edu.gt' && password === '123456789') ||
+    (email === 'nav24044@uvg.edu.gt' && password === '123456789') ||
+    (email === 'pen24997@uvg.edu.gt' && password === '123456789')) {
+    // Redirigir a la página de restaurantes
+    window.location.href = './restaurantes.html';
+} else {
+alert('Correo o contraseña incorrectos');
+}
+
 });
