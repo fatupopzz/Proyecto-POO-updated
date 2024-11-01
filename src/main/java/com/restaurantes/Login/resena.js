@@ -31,7 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Validación: Asegurarse de que los campos no estén vacíos y que se haya seleccionado una calificación
         if (!ratingValue || !reviewText) {
-            alert('Por favor, complete todos los campos antes de enviar.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, complete todos los campos antes de enviar.',
+                });
             return;
         }
 
@@ -40,10 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Puntuación:', ratingValue);
         console.log('Reseña:', reviewText);
 
-        // Muestra un mensaje de confirmación
-        alert('¡Gracias por tu reseña!');
-
-        // Redirige al usuario a la página de restaurantes después de enviar la reseña
-        window.location.href = 'restaurantes.html'; // Redirige a la página principal de restaurantes
+        Swal.fire({
+            icon: 'success',
+            title: '¡Gracias por tu reseña!',
+            text: 'Tu reseña ha sido enviada exitosamente.',
+            confirmButtonColor: '#21be16'
+        }).then(() => {
+            // Redirige al usuario a la página de restaurantes después de enviar la reseña
+            window.location.href = 'restaurantes.html';
+        });
     });
 });
