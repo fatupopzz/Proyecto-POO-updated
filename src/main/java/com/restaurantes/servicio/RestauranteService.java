@@ -1,11 +1,9 @@
 package com.restaurantes.servicio;
 
 import com.restaurantes.modelo.Restaurante;
-import com.restaurantes.Repositorio.RestauranteRepository;
-
+import com.restaurantes.repositorio.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +25,13 @@ public class RestauranteService {
         return restauranteRepository.findAll();
     }
 
-    public Optional<Restaurante> actualizarRestaurante(Long id, Restaurante restauranteActualizado) {
-        return restauranteRepository.findById(id)
-            .map(restaurante -> {
-                restaurante.setNombre(restauranteActualizado.getNombre());
-                restaurante.setDireccion(restauranteActualizado.getDireccion());
-                restaurante.setTipoComida(restauranteActualizado.getTipoComida());
-                return restauranteRepository.save(restaurante);
-            });
+    public Optional<Restaurante> actualizarRestaurante(Long id, Restaurante detallesRestaurante) {
+        return restauranteRepository.findById(id).map(restaurante -> {
+            restaurante.setNombre(detallesRestaurante.getNombre());
+            restaurante.setDireccion(detallesRestaurante.getDireccion());
+            restaurante.setTipoComida(detallesRestaurante.getTipoComida());
+            return restauranteRepository.save(restaurante);
+        });
     }
 
     public boolean eliminarRestaurante(Long id) {
@@ -43,13 +40,5 @@ public class RestauranteService {
             return true;
         }
         return false;
-    }
-
-    public List<Restaurante> buscarRestaurantesPorNombre(String nombre) {
-        return restauranteRepository.findByNombreContainingIgnoreCase(nombre);
-    }
-
-    public List<Restaurante> obtenerRestaurantesMejorCalificados() {
-        return restauranteRepository.findTop10ByOrderByCalificacionPromedioDesc();
     }
 }

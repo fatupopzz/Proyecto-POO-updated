@@ -1,27 +1,29 @@
 package com.restaurantes.modelo;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "restaurantes")
 public class Restaurante {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nombre;
+
+    @Column(nullable = false)
     private String direccion;
+
     private String tipoComida;
-    private double calificacionPromedio;
-    private List<Calificacion> calificaciones;
 
-    public Restaurante() {
-        this.calificaciones = new ArrayList<>();
-    }
+    @Column(name = "calificacion_promedio")
+    private Double calificacionPromedio = 0.0;
 
-    public Restaurante(String nombre, String direccion, String tipoComida) {
-        this();
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.tipoComida = tipoComida;
-        this.calificacionPromedio = 0.0;
-    }
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
 
     // Getters y setters
 

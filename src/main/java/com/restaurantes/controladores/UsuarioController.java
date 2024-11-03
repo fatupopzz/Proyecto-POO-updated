@@ -1,59 +1,73 @@
-package com.restaurantes.controladores;
+package com.restaurantes.controlador;
 
 import com.restaurantes.modelo.Usuario;
-import com.restaurantes.servicio.UsuarioService;
-
+import com.restaurantes.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioRepository usuarioRepository;
 
-    @PostMapping
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody Usuario usuario) {
-        Usuario nuevoUsuario = usuarioService.crearUsuario(usuario);
-        return ResponseEntity.ok(nuevoUsuario);
-    }
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {
-        return usuarioService.obtenerUsuario(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @PostMapping("/registro")
+    public ResponseEntity<String> registrarUsuario(@RequestBody Usuario nuevoUsuario) {
+        if (usuarioRepository.findByEmail(nuevoUsuario.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("El correo ya está en uso.");
+        }
+
+        // Encriptar la contraseña antes de guardarla
+        nuevoUsuario.setContrasena(passwordEncoder.encode(nuevoUsuario.getContrasena()));
+
+        usuarioRepository.save(nuevoUsuario);
+        return ResponseEntity.ok("Usuario registrado exitosamente.");
     }
 
     @GetMapping
     public List<Usuario> listarUsuarios() {
-        return usuarioService.listarUsuarios();
+        return usuarioRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return usuarioService.actualizarUsuario(id, usuario)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<String> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario detallesUsuario) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+
+        if (usuarioExistente.isPresent()) {
+            Usuario usuario = usuarioExistente.get();
+            usuario.setNombre(detallesUsuario.getNombre());
+            usuario.setEmail(detallesUsuario.getEmail());
+            usuario.setContrasena(passwordEncoder.encode(detallesUsuario.getContrasena()));
+
+            usuarioRepository.save(usuario);
+            return ResponseEntity.ok("Usuario actualizado exitosamente.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
-        if (usuarioService.eliminarUsuario(id)) {
-            return ResponseEntity.ok().build();
+    public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return ResponseEntity.ok("Usuario eliminado exitosamente.");
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping("/{id}/cambiar-contrasena")
-    public ResponseEntity<Void> cambiarContrasena(@PathVariable Long id, @RequestBody String nuevaContrasena) {
-        if (usuarioService.cambiarContrasena(id, nuevaContrasena)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
     }
 }

@@ -1,56 +1,37 @@
-package com.restaurantes.servicio;
+// src/main/java/com/uvg/restaurantes/service/UsuarioService.java
+package com.uvg.restaurantes.service;
 
-import com.restaurantes.modelo.Usuario;
-import com.restaurantes.Repositorio.UsuarioRepository;
+import com.uvg.restaurantes.model.Usuario;
+import com.uvg.restaurantes.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioService {
-
+    
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    
+    @Transactional
     public Usuario crearUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
-
-    public Optional<Usuario> obtenerUsuario(Long id) {
-        return usuarioRepository.findById(id);
-    }
-
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
-    }
-
-    public Optional<Usuario> actualizarUsuario(Long id, Usuario usuarioActualizado) {
-        return usuarioRepository.findById(id)
-            .map(usuario -> {
-                usuario.setNombre(usuarioActualizado.getNombre());
-                usuario.setEmail(usuarioActualizado.getEmail());
-                // No actualizamos la contraseña aquí por seguridad
-                return usuarioRepository.save(usuario);
-            });
-    }
-
-    public boolean eliminarUsuario(Long id) {
-        if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id);
-            return true;
+        // Verificar si el email ya existe
+        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
+            throw new RuntimeException("El email ya está registrado");
         }
-        return false;
+        
+        // Usar el procedimiento almacenado para crear el usuario
+        usuarioRepository.crearUsuarioConProcedimiento(
+            usuario.getNombre(),
+            usuario.getEmail(),
+            usuario.getContrasena()
+        );
+        
+        // Retornar el usuario creado
+        return usuarioRepository.findByEmail(usuario.getEmail());
     }
-
-    public boolean cambiarContrasena(Long id, String nuevaContrasena) {
-        return usuarioRepository.findById(id)
-            .map(usuario -> {
-                usuario.setContrasena(nuevaContrasena); // Asegúrate de encriptar la contraseña antes de guardarla
-                usuarioRepository.save(usuario);
-                return true;
-            })
-            .orElse(false);
+    
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 }

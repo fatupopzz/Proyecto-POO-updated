@@ -1,8 +1,11 @@
-package com.restaurantes.modelo;
+import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
@@ -21,28 +24,10 @@ public class Usuario {
     @Column(nullable = false)
     private String contrasena;
 
-    @ElementCollection
-    @CollectionTable(name = "restaurantes_favoritos", joinColumns = @JoinColumn(name = "usuario_id"))
-    @Column(name = "restaurante_id")
-    private List<Long> restaurantesFavoritos;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Calificacion> calificaciones;
-
-    public Usuario() {
-        this.restaurantesFavoritos = new ArrayList<>();
-        this.calificaciones = new ArrayList<>();
-    }
-
-    public Usuario(String nombre, String email, String contrasena) {
-        this();
-        this.nombre = nombre;
-        this.email = email;
-        this.contrasena = contrasena;
-    }
+    @Column(name = "fecha_creacion", updatable = false)
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     // Getters y setters
-
     public Long getId() {
         return id;
     }
@@ -75,47 +60,11 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public List<Long> getRestaurantesFavoritos() {
-        return restaurantesFavoritos;
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setRestaurantesFavoritos(List<Long> restaurantesFavoritos) {
-        this.restaurantesFavoritos = restaurantesFavoritos;
-    }
-
-    public List<Calificacion> getCalificaciones() {
-        return calificaciones;
-    }
-
-    public void setCalificaciones(List<Calificacion> calificaciones) {
-        this.calificaciones = calificaciones;
-    }
-
-    // Métodos adicionales
-
-    public void agregarRestauranteFavorito(Long restauranteId) {
-        if (!this.restaurantesFavoritos.contains(restauranteId)) {
-            this.restaurantesFavoritos.add(restauranteId);
-        }
-    }
-
-    public void eliminarRestauranteFavorito(Long restauranteId) {
-        this.restaurantesFavoritos.remove(restauranteId);
-    }
-
-    public void agregarCalificacion(Calificacion calificacion) {
-        this.calificaciones.add(calificacion);
-        calificacion.setUsuario(this);
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", restaurantesFavoritos=" + restaurantesFavoritos +
-                ", calificaciones=" + calificaciones +
-                '}';
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }
