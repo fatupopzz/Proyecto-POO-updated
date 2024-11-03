@@ -1,7 +1,7 @@
-package com.restaurantes.controlador;
+package com.restaurantes.controladores;
 
 import com.restaurantes.modelo.Usuario;
-import com.restaurantes.repositorio.UsuarioRepository;
+import com.restaurantes.Repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

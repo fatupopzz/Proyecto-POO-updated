@@ -1,11 +1,13 @@
 package com.restaurantes.servicio;
 
-import com.restaurantes.modelo.Restaurante;
-import com.restaurantes.repositorio.RestauranteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.restaurantes.Repositorio.RestauranteRepository;
+import com.restaurantes.modelo.Restaurante;
 
 @Service
 public class RestauranteService {
@@ -40,5 +42,13 @@ public class RestauranteService {
             return true;
         }
         return false;
+    }
+
+    public List<Restaurante> buscarRestaurantesPorNombre(String nombre) {
+        return restauranteRepository.findByNombreContaining(nombre);
+    }
+
+    public List<Restaurante> obtenerRestaurantesMejorCalificados() {
+        return restauranteRepository.findByCalificacionPromedioGreaterThan(4.0);
     }
 }

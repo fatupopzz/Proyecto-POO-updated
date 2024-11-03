@@ -1,8 +1,13 @@
-package com.restaurantes.repositorio;
+package com.restaurantes.Repositorio;
 
-import com.restaurantes.modelo.Restaurante;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.restaurantes.modelo.Restaurante;
+
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
-    // Métodos adicionales personalizados si es necesario
+    List<Restaurante> findByNombreContaining(String nombre);
+    List<Restaurante> findByCalificacionPromedioGreaterThan(double d);
+
 }

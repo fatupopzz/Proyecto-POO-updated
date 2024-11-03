@@ -1,7 +1,19 @@
 package com.restaurantes.modelo;
 
-import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "restaurantes")
@@ -24,6 +36,10 @@ public class Restaurante {
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "restaurante_id")
+    private List<Calificacion> calificaciones;
 
     // Getters y setters
 

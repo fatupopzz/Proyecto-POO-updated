@@ -1,3 +1,5 @@
+package com.restaurantes.modelo;
+
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;

@@ -1,11 +1,14 @@
-// src/main/java/com/uvg/restaurantes/service/UsuarioService.java
-package com.uvg.restaurantes.service;
 
-import com.uvg.restaurantes.model.Usuario;
-import com.uvg.restaurantes.repository.UsuarioRepository;
+package com.restaurantes.servicio;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.restaurantes.Repositorio.UsuarioRepository;
+import com.restaurantes.modelo.Usuario;
 
 @Service
 public class UsuarioService {
@@ -14,7 +17,7 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     
     @Transactional
-    public Usuario crearUsuario(Usuario usuario) {
+    public Optional<Usuario> crearUsuario(Usuario usuario) {
         // Verificar si el email ya existe
         if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
             throw new RuntimeException("El email ya está registrado");
@@ -31,7 +34,7 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(usuario.getEmail());
     }
     
-    public Usuario buscarPorEmail(String email) {
+    public Optional<Usuario> buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
 }

@@ -1,33 +1,18 @@
-<dependencies>
-    <!-- Spring Boot Starter Web -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-        <version>${spring.boot.version}</version>
-    </dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-    <!-- Spring Boot Starter Data JPA -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
+    <groupId>com.example</groupId>
+    <artifactId>restaurantes-uvg</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-    <!-- MySQL Connector -->
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.33</version>
-    </dependency>
+    <properties>
+        <java.version>21</java.version>
+        <spring.boot.version>3.1.5</spring.boot.version>
+    </properties>
 
-<<<<<<< HEAD
-    <!-- Spring Boot Starter Security (para encriptación de contraseñas) -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-        <version>${spring.boot.version}</version>
-    </dependency>
-</dependencies>
-=======
     <dependencies>
         <!-- Spring Boot Starter Web -->
         <dependency>
@@ -57,7 +42,7 @@
             <version>${spring.boot.version}</version>
             <scope>test</scope>
         </dependency>
-    
+
         <!-- Spring Boot Starter Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,13 +50,13 @@
             <version>${spring.boot.version}</version>
         </dependency>
 
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
-        
     </dependencies>
 
     <build>
@@ -92,6 +77,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
->>>>>>> 714f31f212ddc9c700f07997e02831f1044516ec
