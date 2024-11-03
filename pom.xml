@@ -51,13 +51,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-
-        <!-- dependencia mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
-        </dependency>
         
     </dependencies>
 
