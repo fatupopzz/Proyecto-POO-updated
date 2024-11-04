@@ -1,0 +1,73 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1b1b1b;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.faq-container {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.faq-question {
+    width: 100%;
+    background-color: #21be16;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    text-align: left;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+    background-color: #53cf4a;
+}
+
+.faq-answer {
+    display: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #333;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.return-home-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #53cf4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.return-home-btn:hover {
+    background-color: #21be16;
+}

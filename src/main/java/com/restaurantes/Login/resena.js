@@ -1,47 +1,56 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let ratingValue = 0; // Inicialmente, sin estrellas seleccionadas
+    // Función para manejar la selección de estrellas
+    function setupStarRating(starContainerId, ratingInputId) {
+        const stars = document.querySelectorAll(`#${starContainerId} .star`);
+        const ratingInput = document.getElementById(ratingInputId);
 
-    // Obtener todas las estrellas
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('rating'); // Campo oculto para el valor de la calificación
+        stars.forEach((star) => {
+            star.addEventListener('click', function() {
+                const ratingValue = star.getAttribute('data-value');
+                ratingInput.value = ratingValue;
 
-    // Añadir eventos de clic a cada estrella
-    stars.forEach((star, index) => {
-        star.addEventListener('click', function() {
-            ratingValue = index + 1; // El índice comienza en 0, por lo que sumamos 1
-            ratingInput.value = ratingValue; // Asignamos el valor al campo de calificación oculto
-
-            // Actualizar visualmente las estrellas seleccionadas
-            stars.forEach((s, i) => {
-                if (i < ratingValue) {
-                    s.classList.add('checked');
-                } else {
-                    s.classList.remove('checked');
-                }
+                // Marcar solo hasta la estrella seleccionada
+                stars.forEach((s, i) => {
+                    if (i < ratingValue) {
+                        s.classList.add('checked');
+                    } else {
+                        s.classList.remove('checked');
+                    }
+                });
             });
         });
-    });
+    }
+
+    // Inicializar las estrellas para comida y precios
+    setupStarRating('food-rating', 'foodRating');
+    setupStarRating('price-rating', 'priceRating');
+    setupStarRating('service-rating', 'serviceRating');
 
     document.getElementById('review-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Obtiene los valores de los campos del formulario
+        // Obtener valores
         const restaurantName = document.getElementById('restaurant-name').value;
         const reviewText = document.getElementById('review-text').value;
+        const foodRatingValue = document.getElementById('foodRating').value;
+        const priceRatingValue = document.getElementById('priceRating').value;
+        const serviceRatingValue = document.getElementById('serviceRating').value;
 
-        // Validación: Asegurarse de que los campos no estén vacíos y que se haya seleccionado una calificación
-        if (!ratingValue || !reviewText) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campos incompletos',
-                    text: 'Por favor, complete todos los campos antes de enviar.',
-                });
+        // Validación
+        if (!foodRatingValue || !priceRatingValue || !reviewText || !serviceRatingValue) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor, complete todos los campos antes de enviar.',
+            });
             return;
         }
 
-        // Simulación de guardado de reseña (aquí puedes hacer una solicitud a tu backend o almacenarla localmente)
+        // Simulación de guardado
         console.log('Restaurante:', restaurantName);
-        console.log('Puntuación:', ratingValue);
+        console.log('Calificación de la Comida:', foodRatingValue);
+        console.log('Calificación de los Precios:', priceRatingValue);
+        console.log('Clasificacion del Servicio:', serviceRatingValue);
         console.log('Reseña:', reviewText);
 
         Swal.fire({
@@ -50,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             text: 'Tu reseña ha sido enviada exitosamente.',
             confirmButtonColor: '#21be16'
         }).then(() => {
-            // Redirige al usuario a la página de restaurantes después de enviar la reseña
             window.location.href = 'restaurantes.html';
         });
     });

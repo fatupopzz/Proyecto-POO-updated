@@ -211,28 +211,6 @@ textarea {
     height: 100px;
 }
 
-/* Estilos del sistema de calificación por estrellas */
-.rating {
-    direction: rtl; /* Estrellas ordenadas de derecha a izquierda */
-    font-size: 2em; /* Tamaño de las estrellas */
-    display: inline-flex;
-}
-
-.star {
-    cursor: pointer;
-    color: #ccc; /* Estrellas sin seleccionar */
-    font-size: 2em;
-    transition: color 0.2s;
-}
-
-.star.checked {
-    color: gold; /* Color de las estrellas seleccionadas */
-}
-
-.star:hover,
-.star:hover ~ .star {
-    color: gold; /* Color de las estrellas al hacer hover */
-}
 
 /* Estilos del botón */
 button {
@@ -311,3 +289,26 @@ button {
 button:hover {
     background-color: #53cf4a;
 }
+
+.rating {
+    display: inline-flex;
+    font-size: 2em;
+}
+
+.star {
+    cursor: pointer;
+    color: #ccc; /* Color base de las estrellas sin seleccionar */
+    font-size: 2em;
+    transition: color 0.2s;
+}
+
+.star.checked {
+    color: gold; /* Color para estrellas seleccionadas */
+}
+
+.star:hover,
+.star:hover ~ .star {
+    color: gold; /* Color para estrellas al pasar el mouse */
+}
+
+

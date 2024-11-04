@@ -1,0 +1,70 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1b1b1b;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.profile-container {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.return-home-btn,
+.delete-account-btn,
+.edit-account-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.return-home-btn {
+    background-color: #53cf4a;
+    color: white;
+}
+
+.return-home-btn:hover {
+    background-color: #21be16;
+}
+
+.delete-account-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+.delete-account-btn:hover {
+    background-color: #c9302c;
+}
+
+.edit-account-btn {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.edit-account-btn:hover {
+    background-color: #357ab8;
+}
